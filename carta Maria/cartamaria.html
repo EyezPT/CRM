@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Para María</title>
+    <style>
+        
+    </style>
+</head>
+<link rel="stylesheet" href="styless.css">
+<body>
+    <div class="contenedor">
+        <div class="corazon-principal" id="corazon"></div>
+        <div class="carta" id="carta">
+            <div class="texto-carta">
+                <h1>Mi Amor</h1>
+                <p>Soy corta y tarde en darme cuenta, pero esos sillones horribles hicieron que supiera que<br>
+                    mi corazón siempre sería tuyo. <br>
+                    Eres mi alegría, mi paz y mi razón para sonreír y levantarme cada día.<br>
+                    Gracias por existir y llenar mi vida de amor. Te amo 💫</p>
+                <p>Por siempre tuyo,<br>Shady</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const corazon = document.getElementById('corazon');
+        const carta = document.getElementById('carta');
+        let corazones = [];
+        let abierto = false;
+
+        function crearCorazones() {
+            const numCorazones = 100;
+            const maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.8;
+            
+            for(let i = 0; i < numCorazones; i++) {
+                const pequeño = document.createElement('div');
+                pequeño.className = 'corazon-pequeno';
+                
+                const centerX = window.innerWidth / 2 - 15;
+                const centerY = window.innerHeight / 2 - 13.5;
+                
+                pequeño.style.left = centerX + 'px';
+                pequeño.style.top = centerY + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = maxDistance * (0.5 + Math.random() * 0.5);
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                pequeño.style.setProperty('--tx', tx + 'px');
+                pequeño.style.setProperty('--ty', ty + 'px');
+                
+                document.body.appendChild(pequeño);
+                corazones.push(pequeño);
+                
+                setTimeout(() => {
+                    pequeño.style.animation = `explotar 3.5s ease-out forwards`;
+                    pequeño.style.opacity = '1';
+                }, i * 20);
+            }
+        }
+
+        function removerCorazones() {
+            corazones.forEach((corazon, index) => {
+                setTimeout(() => {
+                    corazon.style.animation = `reunir 2.5s ease-in forwards`;
+                    setTimeout(() => corazon.remove(), 2500);
+                }, index * 20);
+            });
+            corazones = [];
+        }
+
+        function toggleCarta() {
+            abierto = !abierto;
+            
+            if(abierto) {
+                corazon.style.opacity = '0';
+                crearCorazones();
+                setTimeout(() => carta.classList.add('visible'), 600);
+            } else {
+                corazon.style.opacity = '1';
+                removerCorazones();
+                carta.classList.remove('visible');
+            }
+        }
+
+        corazon.addEventListener('click', toggleCarta);
+
+        document.addEventListener('click', (e) => {
+            if(abierto && !carta.contains(e.target) && e.target !== corazon) {
+                toggleCarta();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if(abierto) {
+                removerCorazones();
+                crearCorazones();
+            }
+        });
+    </script>
+</body>
+</html>

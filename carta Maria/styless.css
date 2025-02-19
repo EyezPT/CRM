@@ -1,0 +1,123 @@
+body {
+    background: #1a0b2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.contenedor {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.corazon-principal {
+    position: absolute;
+    width: 150px;
+    height: 135px;
+    cursor: pointer;
+    transition: all 1s ease;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.corazon-principal::before,
+.corazon-principal::after {
+    content: '';
+    position: absolute;
+    width: 75px;
+    height: 120px;
+    background: #ff1493;
+    border-radius: 75px 75px 0 0;
+    transition: all 1s ease;
+}
+
+.corazon-principal::before {
+    left: 75px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.corazon-principal::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.corazon-pequeno {
+    position: absolute;
+    width: 30px;
+    height: 27px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 3s linear;
+}
+
+.corazon-pequeno::before,
+.corazon-pequeno::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 24px;
+    background: #ff69b4;
+    border-radius: 15px 15px 0 0;
+}
+
+.corazon-pequeno::before {
+    left: 15px;
+    transform: rotate(-45deg);
+}
+
+.corazon-pequeno::after {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.carta {
+    position: absolute;
+    background: #fff0f6;
+    width: 320px;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255,20,147,0.4);
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1;
+    color: #8b008b;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+
+.carta.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+@keyframes explotar {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0.3);
+        opacity: 0;
+    }
+}
+
+@keyframes reunir {
+    0% {
+        transform: translate(var(--tx), var(--ty)) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+}
